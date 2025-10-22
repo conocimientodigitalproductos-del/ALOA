@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALOA - Reserva de Citas</title>
+    <style>
+        :root {
+            --negro: #000000;
+            --dorado: #D4AF37;
+            --blanco: #FFFFFF;
+            --gris-oscuro: #1a1a1a;
+            --gris-claro: #f5f5f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--blanco);
+            color: var(--negro);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--negro);
+            color: var(--blanco);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo img {
+            height: 60px;
+            width: auto;
+        }
+        
+        .logo h1 {
+            color: var(--dorado);
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: var(--blanco);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--dorado);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--blanco);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://i.imgur.com/i5cjQCF.jpg');
+            background-size: cover;
+            background-position: center;
+            color: var(--blanco);
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--dorado);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--dorado);
+            color: var(--negro);
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #b8941f;
+            transform: translateY(-3px);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background-color: var(--gris-claro);
+        }
+        
+        .about h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--negro);
+            position: relative;
+        }
+        
+        .about h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--dorado);
+            margin: 10px auto;
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+        }
+        
+        .services h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--negro);
+            position: relative;
+        }
+        
+        .services h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--dorado);
+            margin: 10px auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: var(--blanco);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .service-card:hover .service-img img {
+            transform: scale(1.1);
+        }
+        
+        .service-info {
+            padding: 20px;
+        }
+        
+        .service-info h3 {
+            margin-bottom: 10px;
+            color: var(--negro);
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            padding: 80px 0;
+            background-color: var(--gris-claro);
+        }
+        
+        .gallery h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--negro);
+            position: relative;
+        }
+        
+        .gallery h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--dorado);
+            margin: 10px auto;
+        }
+        
+        .carousel {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-item {
+            min-width: 100%;
+        }
+        
+        .carousel-item img {
+            width: 100%;
+            display: block;
+        }
+        
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: var(--blanco);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .carousel-control:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .carousel-control.prev {
+            left: 10px;
+        }
+        
+        .carousel-control.next {
+            right: 10px;
+        }
+        
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--gris-claro);
+            border: 2px solid var(--dorado);
+            cursor: pointer;
+        }
+        
+        .indicator.active {
+            background-color: var(--dorado);
+        }
+        
+        /* Booking Section */
+        .booking {
+            padding: 80px 0;
+        }
+        
+        .booking h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--negro);
+            position: relative;
+        }
+        
+        .booking h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--dorado);
+            margin: 10px auto;
+        }
+        
+        .booking-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .booking-form {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--gris-claro);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .selected-info {
+            background-color: var(--dorado);
+            color: var(--negro);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .calendar-container {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-day {
+            text-align: center;
+            padding: 10px 5px;
+            font-weight: bold;
+            background-color: var(--gris-claro);
+        }
+        
+        .calendar-date {
+            text-align: center;
+            padding: 10px 5px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .calendar-date:hover {
+            background-color: var(--gris-claro);
+        }
+        
+        .calendar-date.selected {
+            background-color: var(--dorado);
+            color: var(--negro);
+        }
+        
+        .calendar-date.unavailable {
+            background-color: #f0f0f0;
+            color: #aaa;
+            cursor: not-allowed;
+        }
+        
+        .time-slots {
+            margin-top: 20px;
+        }
+        
+        .time-slots h3 {
+            margin-bottom: 15px;
+        }
+        
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+        }
+        
+        .time-slot {
+            padding: 10px;
+            text-align: center;
+            background-color: var(--gris-claro);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .time-slot:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .time-slot.selected {
+            background-color: var(--dorado);
+            color: var(--negro);
+        }
+        
+        .time-slot.unavailable {
+            background-color: #f0f0f0;
+            color: #aaa;
+            cursor: not-allowed;
+        }
+        
+        /* Admin Panel */
+        .admin-panel {
+            background-color: var(--negro);
+            color: var(--blanco);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+        
+        .admin-panel h3 {
+            color: var(--dorado);
+            margin-bottom: 20px;
+        }
+        
+        .admin-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .admin-btn {
+            background-color: var(--dorado);
+            color: var(--negro);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .admin-btn:hover {
+            background-color: #b8941f;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--negro);
+            color: var(--blanco);
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            color: var(--dorado);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: var(--blanco);
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+        }
+        
+        .footer-section a:hover {
+            color: var(--dorado);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: var(--dorado);
+            color: var(--negro);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--blanco);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .about-content, .booking-container {
+                flex-direction: column;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+            
+            .carousel-control {
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://i.imgur.com/RA91lgm.png" alt="ALOA Logo">
+                    <h1>ALOA</h1>
+                </div>
+                <button class="mobile-menu-btn">☰</button>
+                <nav>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#galeria">Galería</a></li>
+                        <li><a href="#reservar">Reservar Cita</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <h2>Belleza y Relax en un Solo Lugar</h2>
+            <p>ALOA es un emprendimiento enfocado al sector de belleza, donde se ofrece el mejor servicio profesional de manicura, pedicura, lashes, maquillaje, peinado, tintes y cortes de cabello, donde podrás relajarte mientras degustas de nuestro menú Lunch Bar.</p>
+            <a href="#reservar" class="btn">Reservar Cita</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <h2>Sobre Nosotros</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>En ALOA nos dedicamos a realzar tu belleza natural con servicios de alta calidad. Nuestro equipo de profesionales está comprometido con brindarte una experiencia única y relajante.</p>
+                    <p>Disfruta de nuestro exclusivo menú Lunch Bar mientras te consentimos con nuestros tratamientos de belleza. Creemos que cada cliente merece sentirse especial y lucir radiante.</p>
+                    <p>Visítanos en nuestro acogedor espacio ubicado en Blvd. Hacienda del Jacal 14, Las Plazas, 76180 Santiago de Querétaro, Qro.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://i.imgur.com/lwz2fQF.jpg" alt="Interior de ALOA">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="servicios">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-img">
+                        <img src="https://i.imgur.com/i5cjQCF.jpg" alt="Manicura">
+                    </div>
+                    <div class="service-info">
+                        <h3>Manicura</h3>
+                        <p>Servicio profesional de manicura con los mejores productos del mercado.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-img">
+                        <img src="https://i.imgur.com/YCeEy2i.jpg" alt="Pedicura">
+                    </div>
+                    <div class="service-info">
+                        <h3>Pedicura</h3>
+                        <p>Tratamientos de pedicura para pies saludables y hermosos.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-img">
+                        <img src="https://i.imgur.com/D9nb9c8.jpg" alt="Lashes">
+                    </div>
+                    <div class="service-info">
+                        <h3>Lashes</h3>
+                        <p>Extensiones de pestañas para una mirada impactante.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-img">
+                        <img src="https://i.imgur.com/6CgVocZ.jpg" alt="Maquillaje">
+                    </div>
+                    <div class="service-info">
+                        <h3>Maquillaje</h3>
+                        <p>Maquillaje profesional para ocasiones especiales o diario.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="galeria">
+        <div class="container">
+            <h2>Nuestro Trabajo</h2>
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item">
+                        <img src="https://i.imgur.com/i5cjQCF.jpg" alt="Trabajo 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://i.imgur.com/lwz2fQF.jpg" alt="Trabajo 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://i.imgur.com/YCeEy2i.jpg" alt="Trabajo 3">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://i.imgur.com/D9nb9c8.jpg" alt="Trabajo 4">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://i.imgur.com/6CgVocZ.jpg" alt="Trabajo 5">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://i.imgur.com/TCB0xyR.jpg" alt="Trabajo 6">
+                    </div>
+                </div>
+                <button class="carousel-control prev">❮</button>
+                <button class="carousel-control next">❯</button>
+                <div class="carousel-indicators">
+                    <span class="indicator active" data-index="0"></span>
+                    <span class="indicator" data-index="1"></span>
+                    <span class="indicator" data-index="2"></span>
+                    <span class="indicator" data-index="3"></span>
+                    <span class="indicator" data-index="4"></span>
+                    <span class="indicator" data-index="5"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking" id="reservar">
+        <div class="container">
+            <h2>Reserva tu Cita</h2>
+            <div class="booking-container">
+                <div class="booking-form">
+                    <form id="reservation-form">
+                        <div class="form-group">
+                            <label for="name">Nombre completo</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Teléfono</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Servicio</label>
+                            <select id="service" required>
+                                <option value="">Selecciona un servicio</option>
+                                <option value="manicura">Manicura</option>
+                                <option value="pedicura">Pedicura</option>
+                                <option value="lashes">Lashes</option>
+                                <option value="maquillaje">Maquillaje</option>
+                                <option value="peinado">Peinado</option>
+                                <option value="tintes">Tintes</option>
+                                <option value="cortes">Cortes de cabello</option>
+                            </select>
+                        </div>
+                        
+                        <div id="selected-info" class="selected-info" style="display: none;">
+                            <!-- Aquí se mostrará la fecha y hora seleccionadas -->
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notes">Notas adicionales</label>
+                            <textarea id="notes" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn">Confirmar Reservación</button>
+                    </form>
+                </div>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button id="prev-month" class="btn">‹</button>
+                        <h3 id="current-month">Mes Año</h3>
+                        <button id="next-month" class="btn">›</button>
+                    </div>
+                    <div class="calendar">
+                        <div class="calendar-grid" id="calendar-days">
+                            <!-- Días de la semana -->
+                            <div class="calendar-day">Dom</div>
+                            <div class="calendar-day">Lun</div>
+                            <div class="calendar-day">Mar</div>
+                            <div class="calendar-day">Mié</div>
+                            <div class="calendar-day">Jue</div>
+                            <div class="calendar-day">Vie</div>
+                            <div class="calendar-day">Sáb</div>
+                            <!-- Fechas se generan con JavaScript -->
+                        </div>
+                    </div>
+                    <div class="time-slots">
+                        <h3>Horarios Disponibles</h3>
+                        <div class="time-grid" id="time-slots">
+                            <!-- Horarios se generan con JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin Panel -->
+            <div class="admin-panel">
+                <h3>Panel de Administración</h3>
+                <p>Para editar horarios disponibles y ocupados, ingresa la contraseña:</p>
+                <div class="admin-controls">
+                    <input type="password" id="admin-password" placeholder="Contraseña">
+                    <button id="admin-login" class="admin-btn">Acceder</button>
+                </div>
+                <div id="admin-interface" style="display: none;">
+                    <p>Selecciona una fecha y marca los horarios como disponibles u ocupados:</p>
+                    <div class="admin-controls">
+                        <button id="mark-available" class="admin-btn">Marcar como Disponible</button>
+                        <button id="mark-unavailable" class="admin-btn">Marcar como Ocupado</button>
+                        <button id="save-schedule" class="admin-btn">Guardar Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ALOA</h3>
+                    <p>Tu destino de belleza y relax en Querétaro. Ofrecemos servicios profesionales de manicura, pedicura, lashes, maquillaje y más.</p>
+                    <div class="social-links">
+                        <a href="https://instagram.com/aloa_nails.2" aria-label="Instagram" target="_blank">IG</a>
+                        <a href="http://facebook.com/share/16SQSo5dy6/?mibextid=wwXIfr" aria-label="Facebook" target="_blank">FB</a>
+                        <a href="https://wa.me/4428190976" aria-label="WhatsApp" target="_blank">WA</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><strong>Dirección:</strong> Blvd. Hacienda del Jacal 14, Las Plazas, 76180 Santiago de Querétaro, Qro.</p>
+                    <p><strong>Teléfono:</strong> 744 909 6796</p>
+                    <p><strong>Email:</strong> info@aloa.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Horario</h3>
+                    <p>Lunes a Viernes: 9:00 AM - 7:00 PM</p>
+                    <p>Sábados: 9:00 AM - 5:00 PM</p>
+                    <p>Domingos: Cerrado</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 ALOA. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Datos iniciales
+        let currentDate = new Date();
+        let selectedDate = null;
+        let selectedTime = null;
+        let schedule = JSON.parse(localStorage.getItem('aloaSchedule')) || {};
+        let isAdminMode = false;
+        const adminPassword = "ALOA1234"; // Nueva contraseña
+
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCalendar();
+            initializeCarousel();
+            setupEventListeners();
+            loadSchedule();
+        });
+
+        // Inicializar calendario
+        function initializeCalendar() {
+            updateCalendar();
+            generateTimeSlots();
+        }
+
+        // Actualizar calendario
+        function updateCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Actualizar el encabezado del mes
+            const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            document.getElementById('current-month').textContent = `${monthNames[month]} ${year}`;
+            
+            // Obtener el primer día del mes y el número de días
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            // Generar los días del calendario
+            const calendarGrid = document.getElementById('calendar-days');
+            
+            // Limpiar días existentes (excepto los encabezados de días de la semana)
+            while (calendarGrid.children.length > 7) {
+                calendarGrid.removeChild(calendarGrid.lastChild);
+            }
+            
+            // Añadir espacios en blanco para los días anteriores al primer día del mes
+            for (let i = 0; i < firstDay; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'calendar-date empty';
+                calendarGrid.appendChild(emptyCell);
+            }
+            
+            // Añadir los días del mes
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateCell = document.createElement('div');
+                dateCell.className = 'calendar-date';
+                dateCell.textContent = day;
+                
+                const dateStr = formatDate(new Date(year, month, day));
+                
+                // Marcar días pasados como no disponibles
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const cellDate = new Date(year, month, day);
+                
+                if (cellDate < today) {
+                    dateCell.classList.add('unavailable');
+                } else {
+                    dateCell.addEventListener('click', () => selectDate(dateStr, dateCell));
+                }
+                
+                calendarGrid.appendChild(dateCell);
+            }
+        }
+
+        // Formatear fecha como YYYY-MM-DD
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Seleccionar fecha
+        function selectDate(dateStr, element) {
+            // Quitar selección anterior
+            const previouslySelected = document.querySelector('.calendar-date.selected');
+            if (previouslySelected) {
+                previouslySelected.classList.remove('selected');
+            }
+            
+            // Marcar nueva selección
+            element.classList.add('selected');
+            selectedDate = dateStr;
+            
+            // Actualizar información de fecha seleccionada
+            updateSelectedInfo();
+            
+            // Actualizar horarios disponibles
+            updateTimeSlots();
+        }
+
+        // Actualizar información de fecha y hora seleccionadas
+        function updateSelectedInfo() {
+            const selectedInfo = document.getElementById('selected-info');
+            
+            if (selectedDate && selectedTime) {
+                const date = new Date(selectedDate);
+                const formattedDate = date.toLocaleDateString('es-ES', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+                
+                selectedInfo.innerHTML = `
+                    <p>Fecha seleccionada: ${formattedDate}</p>
+                    <p>Hora seleccionada: ${selectedTime}</p>
+                `;
+                selectedInfo.style.display = 'block';
+            } else if (selectedDate) {
+                const date = new Date(selectedDate);
+                const formattedDate = date.toLocaleDateString('es-ES', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+                
+                selectedInfo.innerHTML = `
+                    <p>Fecha seleccionada: ${formattedDate}</p>
+                    <p>Hora: Por favor selecciona una hora</p>
+                `;
+                selectedInfo.style.display = 'block';
+            } else {
+                selectedInfo.style.display = 'none';
+            }
+        }
+
+        // Generar slots de tiempo
+        function generateTimeSlots() {
+            const timeGrid = document.getElementById('time-slots');
+            timeGrid.innerHTML = '';
+            
+            // Generar horarios de 9:00 AM a 6:00 PM
+            for (let hour = 9; hour <= 18; hour++) {
+                for (let minute = 0; minute < 60; minute += 30) {
+                    const timeStr = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+                    const timeSlot = document.createElement('div');
+                    timeSlot.className = 'time-slot';
+                    timeSlot.textContent = timeStr;
+                    timeSlot.dataset.time = timeStr;
+                    
+                    if (!isAdminMode) {
+                        timeSlot.addEventListener('click', () => selectTime(timeStr, timeSlot));
+                    }
+                    
+                    timeGrid.appendChild(timeSlot);
+                }
+            }
+        }
+
+        // Actualizar slots de tiempo según fecha seleccionada
+        function updateTimeSlots() {
+            if (!selectedDate) return;
+            
+            const timeSlots = document.querySelectorAll('.time-slot');
+            const dateSchedule = schedule[selectedDate] || {};
+            
+            timeSlots.forEach(slot => {
+                const time = slot.dataset.time;
+                const isAvailable = dateSchedule[time] !== 'unavailable';
+                
+                slot.classList.remove('selected', 'unavailable');
+                
+                if (isAvailable) {
+                    slot.classList.remove('unavailable');
+                    if (!isAdminMode) {
+                        slot.addEventListener('click', () => selectTime(time, slot));
+                    }
+                } else {
+                    slot.classList.add('unavailable');
+                    slot.removeEventListener('click', () => selectTime(time, slot));
+                }
+            });
+        }
+
+        // Seleccionar hora
+        function selectTime(timeStr, element) {
+            // Quitar selección anterior
+            const previouslySelected = document.querySelector('.time-slot.selected');
+            if (previouslySelected) {
+                previouslySelected.classList.remove('selected');
+            }
+            
+            // Marcar nueva selección
+            element.classList.add('selected');
+            selectedTime = timeStr;
+            
+            // Actualizar información de fecha y hora seleccionadas
+            updateSelectedInfo();
+        }
+
+        // Inicializar carrusel
+        function initializeCarousel() {
+            const carouselInner = document.querySelector('.carousel-inner');
+            const carouselItems = document.querySelectorAll('.carousel-item');
+            const indicators = document.querySelectorAll('.indicator');
+            const prevBtn = document.querySelector('.carousel-control.prev');
+            const nextBtn = document.querySelector('.carousel-control.next');
+            
+            let currentIndex = 0;
+            const totalItems = carouselItems.length;
+            
+            // Función para actualizar el carrusel
+            function updateCarousel() {
+                carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Actualizar indicadores
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            // Event listeners para botones
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                updateCarousel();
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateCarousel();
+            });
+            
+            // Event listeners para indicadores
+            indicators.forEach((indicator) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = parseInt(indicator.dataset.index);
+                    updateCarousel();
+                });
+            });
+        }
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            // Navegación del calendario
+            document.getElementById('prev-month').addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                updateCalendar();
+            });
+            
+            document.getElementById('next-month').addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                updateCalendar();
+            });
+            
+            // Formulario de reservación
+            document.getElementById('reservation-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validar que se haya seleccionado fecha y hora
+                if (!selectedDate || !selectedTime) {
+                    alert('Por favor, selecciona una fecha y hora para tu cita.');
+                    return;
+                }
+                
+                // Obtener datos del formulario
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const email = document.getElementById('email').value;
+                const service = document.getElementById('service').value;
+                const notes = document.getElementById('notes').value;
+                
+                // Formatear fecha para mostrar
+                const date = new Date(selectedDate);
+                const formattedDate = date.toLocaleDateString('es-ES', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+                
+                // Crear mensaje para WhatsApp
+                const message = `¡Hola! Quiero reservar una cita en ALOA:%0A%0A` +
+                               `*Nombre:* ${name}%0A` +
+                               `*Teléfono:* ${phone}%0A` +
+                               `*Email:* ${email || 'No proporcionado'}%0A` +
+                               `*Servicio:* ${service}%0A` +
+                               `*Fecha:* ${formattedDate}%0A` +
+                               `*Hora:* ${selectedTime}%0A` +
+                               `*Notas:* ${notes || 'Ninguna'}`;
+                
+                // Redirigir a WhatsApp
+                window.open(`https://wa.me/4428190976?text=${message}`, '_blank');
+                
+                // Marcar el horario como ocupado
+                if (!schedule[selectedDate]) {
+                    schedule[selectedDate] = {};
+                }
+                schedule[selectedDate][selectedTime] = 'unavailable';
+                localStorage.setItem('aloaSchedule', JSON.stringify(schedule));
+                
+                // Mostrar mensaje de confirmación
+                alert('¡Cita reservada con éxito! Se ha abierto WhatsApp para que confirmes tu reservación.');
+                
+                // Limpiar formulario
+                this.reset();
+                selectedDate = null;
+                selectedTime = null;
+                document.getElementById('selected-info').style.display = 'none';
+                
+                // Actualizar calendario
+                updateCalendar();
+                updateTimeSlots();
+            });
+            
+            // Panel de administración
+            document.getElementById('admin-login').addEventListener('click', function() {
+                const password = document.getElementById('admin-password').value;
+                
+                if (password === adminPassword) {
+                    isAdminMode = true;
+                    document.getElementById('admin-interface').style.display = 'block';
+                    document.getElementById('admin-password').value = '';
+                    
+                    // Actualizar interfaz para modo administrador
+                    const timeSlots = document.querySelectorAll('.time-slot');
+                    timeSlots.forEach(slot => {
+                        slot.addEventListener('click', function() {
+                            if (isAdminMode) {
+                                const time = this.dataset.time;
+                                const dateSchedule = schedule[selectedDate] || {};
+                                
+                                if (dateSchedule[time] === 'unavailable') {
+                                    this.classList.remove('unavailable');
+                                    delete dateSchedule[time];
+                                } else {
+                                    this.classList.add('unavailable');
+                                    dateSchedule[time] = 'unavailable';
+                                }
+                                
+                                if (!schedule[selectedDate]) {
+                                    schedule[selectedDate] = {};
+                                }
+                                schedule[selectedDate] = dateSchedule;
+                            }
+                        });
+                    });
+                    
+                    alert('Modo administrador activado. Ahora puedes editar la disponibilidad de horarios.');
+                } else {
+                    alert('Contraseña incorrecta.');
+                }
+            });
+            
+            // Botones de administración
+            document.getElementById('mark-available').addEventListener('click', function() {
+                if (!isAdminMode || !selectedDate) return;
+                
+                const timeSlots = document.querySelectorAll('.time-slot');
+                timeSlots.forEach(slot => {
+                    if (slot.classList.contains('selected')) {
+                        const time = slot.dataset.time;
+                        const dateSchedule = schedule[selectedDate] || {};
+                        delete dateSchedule[time];
+                        
+                        if (!schedule[selectedDate]) {
+                            schedule[selectedDate] = {};
+                        }
+                        schedule[selectedDate] = dateSchedule;
+                        
+                        slot.classList.remove('unavailable');
+                    }
+                });
+            });
+            
+            document.getElementById('mark-unavailable').addEventListener('click', function() {
+                if (!isAdminMode || !selectedDate) return;
+                
+                const timeSlots = document.querySelectorAll('.time-slot');
+                timeSlots.forEach(slot => {
+                    if (slot.classList.contains('selected')) {
+                        const time = slot.dataset.time;
+                        const dateSchedule = schedule[selectedDate] || {};
+                        dateSchedule[time] = 'unavailable';
+                        
+                        if (!schedule[selectedDate]) {
+                            schedule[selectedDate] = {};
+                        }
+                        schedule[selectedDate] = dateSchedule;
+                        
+                        slot.classList.add('unavailable');
+                    }
+                });
+            });
+            
+            document.getElementById('save-schedule').addEventListener('click', function() {
+                localStorage.setItem('aloaSchedule', JSON.stringify(schedule));
+                alert('Cambios guardados correctamente.');
+            });
+        }
+
+        // Cargar horarios guardados
+        function loadSchedule() {
+            const savedSchedule = localStorage.getItem('aloaSchedule');
+            if (savedSchedule) {
+                schedule = JSON.parse(savedSchedule);
+            }
+        }
+    </script>
+</body>
+</html>
